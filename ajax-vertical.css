@@ -1,10 +1,11 @@
 /*
- * Cours XML
+ * Cours AJAX
  *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.html
  * Author:  Fraçois Merciol/2009
  * Web:     http://info.merciol.fr
  */
+
 ul.personne {
     border: 1px solid blue;		/* cadre bleu */
     list-style: none;			/* retrait des puces */
@@ -43,12 +44,10 @@ ul.tache {
     padding-right: 8px;			/* compensation des 4px de li */
 }
 
-
 ul.tache li {
     width: 9em;				/* fixe les taches dans une colonne */
     border: none;			/* les li de personne avait une bordure */
     margin: 0;				/* les li de personne avait une marge */
-
     text-align:left;			/* les li de personne était centrés */
 }
 
@@ -56,8 +55,14 @@ ul.tache li:hover {
     background-color: lightPink;	/* materialisation de tâche */
 }
 
+ul.tache li.nouvelle {			/* grise la tâches faites */
+    color: grey;
+    font-style: italic;
+    font-weight: normal;
+}
+
 ul.tache li.faite {			/* grise la tâches faites */
-    background-color: lightGrey;
+    background-color: lightGreen;
     color: grey;
     font-style: italic;
     font-weight: normal;
@@ -68,5 +73,24 @@ h1 {					/* séparation graphique */
     color: white;
     font-size: 110%;
     width: 20em;
-    padding: 2px;
+}
+
+input.texte {
+    width: 10em;
+}
+
+div.vue {
+    float: left;
+}
+
+div.vue h1 {
+    font-size: 100%;
+    width: 10em;
+    margin: 1em auto;
+    text-align: center;
+}
+
+div.vue textarea {
+    width: 30em;
+    height: 10em;
 }

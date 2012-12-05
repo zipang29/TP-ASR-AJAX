@@ -8,7 +8,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--link rel="stylesheet" type="text/css" href="dhtml-js-horizontal.css" /-->
-    <link rel="stylesheet" type="text/css" href="dhtml-js-vertical.css" />
+    <link rel="stylesheet" type="text/css" href="ajax-vertical.css" />
     <!--<script language="JavaScript" type="text/javascript" charset="utf-8" src="dhtml-js.js">
       <!-- Balise fermante pour firefox -->
     <!--</script>-->
@@ -38,6 +38,22 @@
     <!-- Point d'entré DOM à modifier -->
     <div id="taches">
       <ul class="personne"/>
+    </div>
+
+    <div class="vue">
+    <h1>Envoie</h1>
+    <form name="requete">
+    <textarea name="xmlEnvoye" wrap="OFF">
+    </textarea>
+    </form>
+    </div>
+
+    <div class="vue">
+    <h1>Réponse</h1>
+    <form name="reponse">
+    <textarea name="xmlRecu" wrap="OFF">
+    </textarea>
+    </form>
     </div>
 
     <!-- Quelques valeurs d'exemple pour commencer -->

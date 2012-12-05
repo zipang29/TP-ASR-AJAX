@@ -1,5 +1,5 @@
 /*
- * Cours XML
+ * Cours AJAX
  *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.html
  * Author:  Fraçois Merciol/2009
@@ -8,13 +8,19 @@
 
 // ========================================
 // Pour comparer des noms sans tenir compte des espaces
-function trim (str) {
-    return str.replace(/^\s+/g,'').replace(/\s+$/g,'');
+function trim (str) { 
+    return str.replace(/^\s+/g,'').replace(/\s+$/g,'') 
 }
 
 // ========================================
 // Créer la structure HTML :
 // <li onclick="selectionneTache ("texte")">texte</li>
+//function creerTache (texte) {
+//    var liHtml = document.createElement ("li");
+//    liHtml.appendChild (document.createTextNode (texte));
+//    liHtml.setAttribute ("onClick", "selectionneTache (\""+texte+"\")")
+//    return liHtml;
+//}
 function creerTache (texte, periode, lieu) {
     var liHtml = document.createElement ("li");
 	var img1 = document.createElement("img");
@@ -42,7 +48,7 @@ function creerTache (texte, periode, lieu) {
 function creerPersonne (nom, texte, periode, lieu) {
     var liHtml = document.createElement ("li");
     liHtml.appendChild (document.createTextNode (nom));
-    liHtml.setAttribute ("onClick", "selectionneNom (\""+nom+"\")");
+    liHtml.setAttribute ("onClick", "selectionneNom (\""+nom+"\")")
 
     var ulHtml = document.createElement ("ul");
     ulHtml.appendChild (creerTache (texte, periode, lieu));
@@ -63,9 +69,11 @@ function creerPersonne (nom, texte, periode, lieu) {
 function getPersonnes () {
     for (var listePersonnes = document.getElementById ("taches").firstChild;
 	 listePersonnes;
-	 listePersonnes = listePersonnes.nextSibling)
+	 listePersonnes = listePersonnes.nextSibling) {
+
 	if (listePersonnes.nodeName.toLowerCase () == "ul")
 	    return listePersonnes;
+    }
 }
 
 // ========================================
@@ -84,14 +92,10 @@ function getPersonnes () {
 //
 // <li>nom</li> est équivalent à <li><TextNode textContent="nom"/></li>
 function getPersonne (personnes, nom) {
-    for (var personne = personnes.firstChild;
-	 personne;
-	 personne = personne.nextSibling) { 
+    for (var personne = personnes.firstChild; personne; personne = personne.nextSibling) { 
 	if (personne.nodeName.toLowerCase () != "li")
 	    continue;
-	for (var attribut = personne.firstChild;
-	     attribut;
-	     attribut = attribut.nextSibling)
+	for (var attribut = personne.firstChild; attribut; attribut = attribut.nextSibling)
 	    if (attribut.nodeName.toLowerCase () == "#text" &&
 		nom == trim (attribut.data))
 		return personne;
@@ -134,13 +138,16 @@ function getTache (taches, texte) {
 
 // ========================================
 // Ajoute une tâche dans une personne
-// Créer la personne si besoin
+// Crée la personne si besoin
 function ajouteTache (nom, texte, periode, lieu) {
+    if (!nom || ! texte)
+	return;
     var personnes = getPersonnes ();
     var personne = getPersonne (personnes, nom);
     if (!personne) {
 	// ajout de la personne ET de la tâche
 	personnes.appendChild (creerPersonne (nom, texte, periode, lieu));
+	setTache (nom, texte, "nouvelle", periode, lieu);
 	return;
     }
     var taches = getTaches (personne);
@@ -148,14 +155,16 @@ function ajouteTache (nom, texte, periode, lieu) {
     if (tache)
 	return;
     // ajout à une personne existante
-    taches.appendChild (creerTache (texte, periode, lieu));
+    taches.appendChild (creerTache (texte, periode,lieu ));
+    setTache (nom, texte, "nouvelle", periode, lieu);
 }
 
 // ========================================
 // Supprime une tâche dans une personne
 // Supprime la personne si besoin
 function supprimeTache (nom, texte) {
-
+    if (!nom || ! texte)
+	return;
     var personnes = getPersonnes ();
     var personne = getPersonne (personnes, nom);
     if (!personne)
@@ -164,7 +173,6 @@ function supprimeTache (nom, texte) {
     var tache = getTache (taches, texte);
     if (!tache)
 	return;
-
     taches.removeChild (tache);
     if (taches.childNodes.length < 1)
 	personnes.removeChild (personne);
@@ -172,28 +180,80 @@ function supprimeTache (nom, texte) {
 
 // ========================================
 // Change la classe CSS d'une tâche
-// <li onclick="selectionneTache ("texte")" class="faite">texte</li>
-// ou
-// <li onclick="selectionneTache ("texte")">texte</li>
-function faitTache (nom, texte) {
-
+// <li onclick="selectionneTache ("texte")" class="etat">texte</li>
+function setTache (nom, texte, etat, periode, lieu) {
+    if (!nom || ! texte)
+	return;
     var personne = getPersonne (getPersonnes (), nom);
     if (!personne)
 	return;
     var tache = getTache (getTaches (personne), texte);
     if (!tache)
 	return;
+    tache.className = etat;
+    if (etat == "active")
+	return;
+    var xml =
+	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+
+	"<requete info=\""+etat+"\">\n"+
+	"  <personne>"+nom+"</personne>\n"+
+	"  <tache>"+texte+"</tache>\n"+
+	"  <lieu>"+lieu+"</lieu>\n"+
+	"  <periode>"+periode+"</periode>\n"+
+	"</requete>\n";
 
-    if (!tache.className)
-	tache.className = "faite";
-    else
-	// !!! l'attribut "class" correspond à la propriété "className" !!!
-	tache.removeAttribute ("class");
+    envoie (window.location.protocol+"//"+window.location.hostname+":"+window.location.port,
+	    window.location.pathname.substr (0,window.location.pathname.lastIndexOf ("/"))+"/ajax.php",
+	    xml);
+}
+
+// ========================================
+// Fonctions Ajax
+
+function envoie (serveur, uri, xml) {
+
+    this.document.forms.requete.xmlEnvoye.value = xml;
+    var xmlRecu = this.document.forms.reponse.xmlRecu;
+    xmlRecu.value = "";
+
+    var requete = new XMLHttpRequest ();
+    requete.open ("POST", serveur+uri, true); // "asynchrone" est a "true"
+    requete.setRequestHeader ("Method", "POST " + uri + " HTTP/1.0");
+    requete.setRequestHeader ("Content-Type", "application/xml");
+    requete.onreadystatechange = function () {
+	recoie (requete, xmlRecu);
+    }
+    requete.send (xml);
+    delete requete;
+}
+
+function recoie (requete, xmlRecu) {
+    if (requete.readyState != 4)
+	// la fonction est appellée à plusieurs étapes
+	return;
+    if (requete.status != 200)
+	return;
+    xmlRecu.value = requete.responseText;
+    var json;
+    eval ("json=" + xml2json (str2xml (xmlRecu.value), "  "));
+    var action = json ["reponse"]["@action"];
+    var nom =  json ["reponse"]["personne"];
+    var texte =  json ["reponse"]["tache"];
+    var periode =  json ["reponse"]["periode"];
+    var lieu =  json ["reponse"]["lieu"];
+    if (action == "cree")
+	setTache (nom, texte, "active", periode, lieu);
+    else if (action == "supprime")
+	supprimeTache (nom, texte);
 }
 
 // ========================================
 // Fonctions Javascript appelées dans le document
 
+//function ajoute () {
+//    ajouteTache (trim (this.document.forms.formulaire.nom.value),
+//		 trim (this.document.forms.formulaire.texte.value));
+//}
 function ajoute () {
 	var inputs = document.getElementsByTagName('input'),
 	inputsLength = inputs.length;
@@ -212,6 +272,7 @@ function ajoute () {
 	}
 
     ajouteTache (trim (this.document.forms.formulaire["nom"].value), trim(this.document.forms.formulaire.texte.value), periode, lieu);
+
 }
 
 function supprime () {
@@ -219,26 +280,18 @@ function supprime () {
 		   trim (this.document.forms.formulaire.texte.value));
 }
 
-function maj() {
-	supprimeTache (trim (this.document.forms.formulaire.nom.value), trim (this.document.forms.formulaire.texte.value));
-	ajoute();
-}
-
 function fait () {
-    faitTache (trim (this.document.forms.formulaire.nom.value),
-	       trim (this.document.forms.formulaire.texte.value));
+    setTache (trim (this.document.forms.formulaire.nom.value),
+	      trim (this.document.forms.formulaire.texte.value),
+	      "faite");
 }
 
 function selectionneNom (nom) {
     this.document.forms.formulaire.nom.value = nom;
 }
 
-function selectionneTache (texte, periode, lieu) {
+function selectionneTache (texte) {
     this.document.forms.formulaire.texte.value = texte;
-	var elemChecked = document.getElementById(periode);
-	elemChecked.checked = "checked";
-	var elemChecked2 = document.getElementById(lieu);
-	elemChecked2.checked = "checked";
 }
 
 // ========================================

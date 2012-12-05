@@ -17,7 +17,7 @@
   $nom = trim ($racineRequete->getElementsByTagName ("personne")->item (0)->nodeValue);
   $texte = trim ($racineRequete->getElementsByTagName ("tache")->item (0)->nodeValue);
   $periode = trim($racineRequete->getElementsByTagName("periode")->item(0)->nodeValue);
-  $lieu = trim($racineRequete->getElementByTagName("lieu")->item(0)->nodeValue);
+  $lieu = trim($racineRequete->getElementsByTagName("lieu")->item(0)->nodeValue);
 
   sleep (mt_rand (1, 10));
 
