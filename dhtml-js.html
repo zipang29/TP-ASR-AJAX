@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr">
+  <head>
+    <meta name="Date" content="2009-10-25" />
+    <meta name="Authors" content="F.Merciol"/>
+    <meta name="Keywords" lang="fr" content="cours, DHTML, JavaScript" />
+    <meta name="Copyright" lang="fr" content="http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.html" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--link rel="stylesheet" type="text/css" href="dhtml-js-horizontal.css" /-->
+    <link rel="stylesheet" type="text/css" href="dhtml-js-vertical.css" />
+    <!--<script language="JavaScript" type="text/javascript" charset="utf-8" src="dhtml-js.js">
+      <!-- Balise fermante pour firefox -->
+    <!--</script>-->
+	<script language="JavaScript" type="text/javascript" charset="utf-8" src="str2xml.js"><!-- Balise fermante pour firefox --></script>
+    <script language="JavaScript" type="text/javascript" charset="utf-8" src="xml2json.js"><!-- Balise fermante pour firefox --></script>
+    <script language="JavaScript" type="text/javascript" charset="utf-8" src="ajax.js"><!-- Balise fermante pour firefox --></script>
+
+    <title>Cours DHTML</title>
+  </head>
+  <body>
+
+    <h1>Gestion d'une tâche</h1>
+
+    <form name="formulaire">
+		<img src="matin.png" alt="Matin" /><input type="radio" name="periode" value="matin" id="matin" /><img src="maison.png" alt="Maison" /><input type="radio" name="lieu" value="maison" id="maison" /><br />
+		<img src="midi.png" alt="Midi" /><input type="radio" name="periode" value="midi" id="midi" /><img src="usine.png" alt="Usine" /><input type="radio" name="lieu" value="usine" id="usine" /> Nom : <input type="text" name="nom" />Tâche : <input type="text" name="texte" /><br />
+		<img src="soir.png" alt="Soir" /><input type="radio" name="periode" value="soir" id="soir" /><img src="palette.png" alt="Association" /><input type="radio" name="lieu" value="palette" id="palette" /><br />
+		<br />
+		<input type="button" value="Ajouter" onClick="javascript:ajoute ()" />
+		<input type="button" value="Supprime" onClick="javascript:supprime ()" />
+		<input type="button" value="faire" onClick="javascript:fait ()" />
+		<input type="button" value="Mise à jour" onClick="javascript:maj()" />
+    </form>
+
+    <h1>Récapitulatif des tâches</h1>
+
+    <!-- Point d'entré DOM à modifier -->
+    <div id="taches">
+      <ul class="personne"/>
+    </div>
+
+    <!-- Quelques valeurs d'exemple pour commencer -->
+    <script type="text/javascript" charset="utf-8">
+      ajouteTache ("Thibault", "Lecture", "matin", "maison");
+      ajouteTache ("Thibault", "Peinture", "matin", "maison");
+      ajouteTache ("Guillaume", "Cuisine", "matin", "maison");
+      ajouteTache ("Guillaume", "Vidange", "matin", "maison");
+    </script>
+
+  </body>
+</html>
