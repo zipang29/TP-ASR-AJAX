@@ -1,0 +1,61 @@
+/*
+ * Cours XML
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.html
+ * Author:  Fraçois Merciol/2009
+ * Web:     http://info.merciol.fr
+ */
+ul.personne {
+    border: 1px solid blue;		/* cadre bleu */
+    list-style: none;			/* retrait des puces */
+    padding: 2px;			/* retrait du décalage de liste */
+}
+
+ul.personne li {
+    width: 10em;			/* largeur de personne */
+    margin: 2px 0;			/* espace entre les lignes */
+    border: 1px solid blue;		/* cadre bleu */
+    font-weight: bold;			/* personne et tache en gras */
+    text-align: center;			/* personne centré */
+}
+
+ul.personne li:hover {
+    background-color: lightSalmon;	/* materialisation de personne */
+}
+
+ul.tache {
+    position: absolute;			/* taches à gauche des personne */
+    display: inline;			/* tache sur la même ligne que personne */
+    margin: -1px 0 0 0;			/* remonte les taches de la bordure de personne */
+    padding: 0;				/* retrait du décalage de liste */
+    left: 11em;				/* à gauche de personne */
+    border: 1px solid blue;		/* cadre bleu */
+    list-style: none;			/* retrait des puces */
+}
+
+ul.tache li {
+    float: left;			/* place les taches en ligne */
+    border: none;			/* les li de personne avait une bordure */
+    margin: 0;				/* les li de personne avait une marge */
+    padding: 0 0 0 2px;			/* les taches sont à gauche, mais pas trop */
+    text-align: left;			/* les li de personne était centrés */
+}
+
+ul.tache li:hover {
+    background-color: lightPink;	/* materialisation de tâche */
+}
+
+ul.tache li.faite {			/* grise la tâches faites */
+    background-color: lightGrey;
+    color: grey;
+    font-style: italic;
+    font-weight: normal;
+}
+
+h1 {					/* séparation graphique */
+    background-color: blue;
+    color: white;
+    font-size: 110%;
+    width: 20em;
+    padding: 2px;
+}

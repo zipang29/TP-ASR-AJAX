@@ -1,0 +1,72 @@
+/*
+ * Cours XML
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.html
+ * Author:  Fraçois Merciol/2009
+ * Web:     http://info.merciol.fr
+ */
+ul.personne {
+    border: 1px solid blue;		/* cadre bleu */
+    list-style: none;			/* retrait des puces */
+    margin: 1em;			/* espace exterieur */
+    padding: 0;				/* retrait du décalage de liste */
+    display: inline-block;		/* limite la largeur au nombre de personne */
+    height: 10em;			/* fixe une hauteur (float n'en donne pas) */
+}
+
+ul.personne li {
+    float: left;			/* liste horizontale */
+    margin: 2px;			/* espace enre personnes */
+    padding: 4px;			/* espace avec le cadre */
+    width: 10em;			/* largeur des colonnes */
+
+    border: 1px solid blue;		/* cadre bleu */
+
+    font-weight: bold;			/* personne et tache en gras */
+    text-align:center;			/* personne centré */
+}
+
+
+ul.personne li:hover {
+    background-color: lightSalmon;	/* materialisation de personne */
+}
+
+ul.tache {
+    width: 9em;				/* fixe une colonne dans une personne */
+    position: absolute;			/* pour englober les sous-éléments */
+    margin-top: 10px;			/* espace avec personne */
+    margin-left: 3px;			/* centre la liste des tâches */
+
+    border: 1px solid blue;		/* cadre bleu */
+    list-style: none;			/* retrait des puces */
+    padding-left: 0;			/* retrait du décalage de liste */
+    padding-right: 8px;			/* compensation des 4px de li */
+}
+
+
+ul.tache li {
+    width: 9em;				/* fixe les taches dans une colonne */
+    border: none;			/* les li de personne avait une bordure */
+    margin: 0;				/* les li de personne avait une marge */
+
+    text-align:left;			/* les li de personne était centrés */
+}
+
+ul.tache li:hover {
+    background-color: lightPink;	/* materialisation de tâche */
+}
+
+ul.tache li.faite {			/* grise la tâches faites */
+    background-color: lightGrey;
+    color: grey;
+    font-style: italic;
+    font-weight: normal;
+}
+
+h1 {					/* séparation graphique */
+    background-color: blue;
+    color: white;
+    font-size: 110%;
+    width: 20em;
+    padding: 2px;
+}
